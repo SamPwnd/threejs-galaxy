@@ -17,3 +17,39 @@ body
     left: 0;
     outline: none;
 }
+
+.text {
+    position: absolute;
+    font-family:  'Space Mono';
+    z-index: 1;
+    max-width: 500px;
+    margin-top: 32px;
+    margin-left: 32px;
+    margin-right: 6px;
+}
+
+.text h1 {
+    color: #fff;
+    font-size: 2.6rem;
+    margin-bottom: 6px;
+}
+
+.text h2, .text h3 {
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 768px) {
+    .text {
+        margin-left: 22px;
+    }
+    .text h1 {
+        font-size: 1.8rem;
+    }
+
+    .text h2, .text h3 {
+        font-size: 0.9rem;
+    }
+}
