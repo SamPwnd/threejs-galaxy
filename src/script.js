@@ -40,7 +40,41 @@ parameters.outsideColor = '#1b3984'
 parameters.galaxyRotation = 0.05
 parameters.starsRotation = 0.02
 parameters.stars = 25000
-parameters.starColor = '#f4f4d4'
+parameters.starColor = '#f9f9eb'
+
+// Random button feature
+const randomBtn = document.querySelector('.random-btn')
+randomBtn.addEventListener('click', () => {
+    parameters.count = Math.floor(Math.random() * (600000 - 3000 + 1)) + 3000; // Da 3000 a 60000
+    console.log(parameters.count);
+    
+    parameters.size = Math.random() * (0.07 - 0.02) + 0.02
+    parameters.radius = Math.random() * (20 - 1) + 1; // Da 1 a 20
+    parameters.branches = Math.floor(Math.random() * (8 - 2) + 2) // Da 2 a 8
+    parameters.spin = Math.random() * (5 - (-5)) + (-5)    
+    parameters.galaxyRotation = Math.random() * (0.7 - 0.05) + 0.05
+
+    // Creates random colors as THREE.Color objects
+    const randomInsideColor = new THREE.Color(Math.random(), Math.random(), Math.random())
+    const randomOutsideColor = new THREE.Color(Math.random(), Math.random(), Math.random())
+
+    // Converts colors to string
+    parameters.insideColor = randomInsideColor.getStyle()
+    parameters.outsideColor = randomOutsideColor.getStyle()
+
+    // Updates the gui
+    countControl.setValue(parameters.count)
+    sizeControl.setValue(parameters.size)
+    radiusControl.setValue(parameters.radius)
+    branchesControl.setValue(parameters.branches)
+    spinControl.setValue(parameters.spin)
+    rotationControl.setValue(parameters.galaxyRotation)
+    insideColorControl.setValue(parameters.insideColor)
+    outsideColorControl.setValue(parameters.outsideColor)
+
+    generateGalaxy()
+})
+
 
 let geometry = null
 let material = null
@@ -162,16 +196,16 @@ generateStars()
 const galaxyFolder = gui.addFolder('Galaxy Parameters')
 const starsFolder = gui.addFolder('Background Stars Parameters')
 
-galaxyFolder.add(parameters, 'count').min(100).max(1000000).step(100).onFinishChange(generateGalaxy)
-galaxyFolder.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generateGalaxy)
-galaxyFolder.add(parameters, 'radius').min(0.01).max(20).step(0.01).onFinishChange(generateGalaxy)
-galaxyFolder.add(parameters, 'branches').min(2).max(20).step(1).onFinishChange(generateGalaxy)
-galaxyFolder.add(parameters, 'spin').min(-5).max(5).step(0.001).onFinishChange(generateGalaxy)
+const countControl = galaxyFolder.add(parameters, 'count').min(100).max(1000000).step(100).onFinishChange(generateGalaxy)
+const sizeControl = galaxyFolder.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generateGalaxy)
+const radiusControl = galaxyFolder.add(parameters, 'radius').min(0.01).max(20).step(0.01).onFinishChange(generateGalaxy)
+const branchesControl = galaxyFolder.add(parameters, 'branches').min(2).max(20).step(1).onFinishChange(generateGalaxy)
+const spinControl = galaxyFolder.add(parameters, 'spin').min(-5).max(5).step(0.001).onFinishChange(generateGalaxy)
 galaxyFolder.add(parameters, 'randomness').min(0).max(2).step(0.001).onFinishChange(generateGalaxy)
 galaxyFolder.add(parameters, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(generateGalaxy)
-galaxyFolder.addColor(parameters, 'insideColor').onFinishChange(generateGalaxy)
-galaxyFolder.addColor(parameters, 'outsideColor').onFinishChange(generateGalaxy)
-galaxyFolder.add(parameters, 'galaxyRotation').min(0.01).max(1).step(0.01).onFinishChange(generateGalaxy)
+const insideColorControl = galaxyFolder.addColor(parameters, 'insideColor').onFinishChange(generateGalaxy)
+const outsideColorControl = galaxyFolder.addColor(parameters, 'outsideColor').onFinishChange(generateGalaxy)
+const rotationControl = galaxyFolder.add(parameters, 'galaxyRotation').min(0.01).max(1).step(0.01).onFinishChange(generateGalaxy)
 starsFolder.add(parameters, 'starsRotation').min(0.01).max(2).step(0.01).onFinishChange(generateStars)
 starsFolder.add(parameters, 'stars').min(0).max(1000000).step(100).onFinishChange(generateStars)
 starsFolder.addColor(parameters, 'starColor').onChange(generateStars)
@@ -233,7 +267,10 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     if (points) {
-        points.rotation.y = elapsedTime * parameters.galaxyRotation
+        if (parameters.spin > 0)
+            points.rotation.y = elapsedTime * parameters.galaxyRotation
+        else
+            points.rotation.y = - (elapsedTime * parameters.galaxyRotation)
     }
     if (stars) {
         stars.rotation.y = - (elapsedTime * parameters.starsRotation)

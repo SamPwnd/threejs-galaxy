@@ -18,7 +18,7 @@ body
     outline: none;
 }
 
-.text {
+.panel {
     position: absolute;
     font-family:  'Space Mono';
     z-index: 1;
@@ -28,13 +28,13 @@ body
     margin-right: 6px;
 }
 
-.text h1 {
+.panel h1 {
     color: #fff;
     font-size: 2.6rem;
     margin-bottom: 6px;
 }
 
-.text h2, .text h3 {
+.panel h2, .panel h3 {
     color: #fff;
     font-weight: 400;
     font-size: 1.1rem;
@@ -42,14 +42,33 @@ body
 }
 
 @media (max-width: 768px) {
-    .text {
+    .panel {
         margin-left: 22px;
     }
-    .text h1 {
+    .panel h1 {
         font-size: 1.8rem;
     }
 
-    .text h2, .text h3 {
+    .panel h2, .panel h3 {
         font-size: 0.9rem;
     }
+}
+
+.random-btn {
+    width: 46px;
+    height: 46px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+.random-btn:hover {
+    cursor: pointer;
+}
+.random-btn > svg {
+    width: 32px;
+    height: 32px;
 }
