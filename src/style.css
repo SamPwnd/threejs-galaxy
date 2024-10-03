@@ -41,19 +41,6 @@ body
     margin-bottom: 6px;
 }
 
-@media (max-width: 768px) {
-    .panel {
-        margin-left: 22px;
-    }
-    .panel h1 {
-        font-size: 1.8rem;
-    }
-
-    .panel h2, .panel h3 {
-        font-size: 0.9rem;
-    }
-}
-
 .random-btn {
     width: 46px;
     height: 46px;
@@ -72,3 +59,26 @@ body
     width: 32px;
     height: 32px;
 }
+
+@media (max-width: 768px) {
+    .panel {
+        margin-left: 22px;
+        margin-top: 46px;
+    }
+    .panel h1 {
+        font-size: 1.8rem;
+    }
+
+    .panel h2, .panel h3 {
+        font-size: 0.9rem;
+    }
+
+    .random-btn {
+        bottom: 32px;
+        right: 22px; 
+        position: fixed;
+        width: 58px;
+        height: 58px;   
+    }
+}
+
